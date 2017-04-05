@@ -1,0 +1,90 @@
+---
+title: "Burger CH1, Sections 1-7"
+author: "Kevin Thornton"
+date: "April 5, 2017"
+output: html_document
+---
+
+# Hardy-Weinberg
+
+## One locus, two alleles
+
+There are three genotypes, $A_1A_1$, $A_1A_2$, and $A_2A_2$  The frequencies of the genotypes are $P$, $2PQ$, and RQ$, respectively.  The factor of two in the second term comes from there being to allele orderings that result in the heterozygote.
+
+The main question is, "What is $P'$?", or "What is the frequency if $P$ in the next generation?". To make progress, we assume:
+
+* Random mating
+* No selection
+* No further mutation
+* autosomal locus
+* no separate sexes
+
+With these assumptions, changes in genotype frequency boil down to multiplying frequencies times the expected gamete ratios from Mendelian inheritance.  The relevant table is 2.1 on page 6.
+
+For example, $$P' = P^2 \times 1 + 4PQ \times \frac{1}{2} + 2PR \times 0 + 4Q^2 \times \frac{1}{4} + 4QR \times 0 + R^2 \times 0,$$ which simplifies to $$P' = (P+Q)^2.$$
+
+If we continue to another generation, we'll get $$P'' = (P'+Q')^2  =(P+Q)^2.$$
+
+Thus, the genotype frequencies hit "HWE" in a single generation.  The allele frequencies are $p = f(A_1) = (P+Q)$ and $q = f(A_2) = (Q+R)$.
+
+## Separate sexes, X linkage
+
+These cases are curiosities, given that the book will likely never deal with selection in a way where this stuff matters.
+
+For separate sexes, HWE is reached *within* each sex in one generation, and then within the entire population in generation two.
+
+For X linkage, there's a harmonic convergence to HWE, where the deviation from HWE oscillates in sign each generation and converges rapidly, but requires $> 2$ generations.
+
+## Multiple alleles
+
+This will be important.  Later models in the book will involve multiple loci with multiple alleles per locus.
+
+Alleles are $A_i, i \in 1, \ldots, k$ and genotypes $A_iA_j$ are unordered, giving frequency $2P_{ij}$.  Thus, the frequency of an allele is its marginal sum over genotypes, $$p_i = f(A_i) = \sum_{j=1}^kP_{ij}.$$
+
+The book-keeping gets tedious.  The unordered genotype $A_iA_j$ can be the offspring of unordered matings $A_iA_k \times A_lA_j$, and the subscripts can take on several values representing homo- or hetero- zygous parental types:
+
+* $A_iA_i \times A_jA_j$ with probability $2(P_{ii}P_{jj})$
+* $A_iA_k \times A_jA_j$ with probability $2(2P_{ik}P_{jj})$
+* $A_iA_i \times A_lA_j$ with probability $2(P_{ii}2P_{lj})$
+* $A_iA_j \times A_iA_j$ with probability $2(2P_{ij}2P_{lj})$
+* $A_iA_j \times A_iA_j$ with probability $2(2P_{ij}2P_{lj})$
+* $A_jA_k \times A_lA_j$ with probability $2(2P_{jk}2P_{lj})$
+
+For each of the above matings, the probability of an $A_iA_j$ offspring is 1, 1/2, 1/2, 1/2, and 1/4, respectively.  The unconditional probability of an $A_iA_j$ offspring therefor must sum over genotype frequencies: $$ 2P'_{ij} = 2P_{ii}P_{jj} + 2\sum_{k \neq i}P_{ik}P{lj} + 2\sum_{l \neq j}P_{ii}P_{lj} + 2P_{ij}^2 + 2\sum_{k \neq i}\sum_{l \neq j, (k,l)\neq (j,i)}P_{ik}P_{lj}.$$
+
+The previous expression reduces to $P'_{ij} = p_ip_j$ for all $i$ and $j$.
+
+# Variance components
+
+## Definitions
+
+$G_{ij}$ is the genetic value of genotype $A_iA_j$.  The mean genetic value is $$\bar G = \sum_{i,j}G_{ij}P_{ij}.$$  The deviation in genetic value from the mean for genotype $A_iA_j$ is $$g_{ij} = G_{ij}-\bar G,$$ which is sometimes called the "average excess" of the genotype.
+
+The _total_ genetic variance is based on the _squared excesses_, _e.g._ $$\sigma_G^2 = \sum_{i,j}g_{ij}^2P_{ij}.$$
+
+## Parents pass genes on to offspring, but not genetic values
+
+This is example 1, page 11.
+
+One locus, two alleles, and the pop is in HWE.  Genetic values are $G_{11} \neq G_{12} = G_{22},$ implying that $A_2$ is dominant.
+
+What is $G'_{12}$ in the next generation amongst the offspring of $A_{12}$ individuals?  
+$$
+\begin{aligned}
+G'_{12} &= Pr(\mathrm{mate\ is\ }A_{11})Pr(G\mathrm{\ values\ in\ offpsring}) + \ldots \\
+ &= p^2(\frac{1}{2}G_{11} + \frac{1}{2}G_{12})+2pq(\frac{1}{4}G_{11}+\frac{1}{2}G_{12}+\frac{1}{4}G_{22})+q^2(\frac{1}{2}G_{12}+\frac{1}{2}G_{22})\\
+ &= \frac{1}{2}pG_{11} + (1-\frac{1}{2}p)G_{22}
+\end{aligned}
+$$
+
+But, the expected gentic value from $A_{22}$ offspring is $G_{22}$ due to the dominanace of $A_2$, and Medelian segregation complicates the relationship between offspring and parental genetic values.
+
+## Fisher's least-squares approximation
+
+In order to make progress, we have to get back to Fisher.  We're doing to define the average effect of an allele on genetic values.  Thus, allele $A_i$ on average contributes $\gamma_i$ to genetic values.  With this new notation the _average excess_ becomes $$g_{ij} = \gamma_i + \gamma_j + \upsilon_{ij}.$$  Here, $\nu_{ij}$ is the _dominance deviation_ from the mean trait value. The simple additive model is when $\upsilon_{ij} = 0.$
+
+What we want to do is approximate $G_{ij}$ with the best-fit linear expression, $\bar G + \gamma_i + \gamma_j$.  To do this, we minimize the dominance variance, _e.g._ $$\sigma^2_D = \sum_{ij}\upsilon^2_{ij}P_{ij} = \sum_{ij}(g_{ij}-\gamma_i -\gamma_j)^2P_{ij}.$$  Taking the derivative with respect to $\gamma_i$ means that the minimization condition is $$ \sum_{j}\upsilon^2_{ij}P_{ij} = \sum_{j}(g_{ij}-\gamma_i -\gamma_j)P_{ij} = 0$$ for all $i$.
+
+Getting to 3.8 is tricky--steps are skipped.  You take $\sum_{ij}g_{ij}P_{ij}$, and substitute a bunch of things.  The mean of the average effect of a mutation is seen to be 0.
+
+Let's work thru example 2, which is one locus, two alleles, and HWE.  The mean genetic value is $$\bar G = G_{22} + 2(G_{12}+G_{22}) + 2\upsilon p^2.$$
