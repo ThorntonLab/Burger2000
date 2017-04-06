@@ -88,3 +88,9 @@ What we want to do is approximate $G_{ij}$ with the best-fit linear expression, 
 Getting to 3.8 is tricky--steps are skipped.  You take $\sum_{ij}g_{ij}P_{ij}$, and substitute a bunch of things.  The mean of the average effect of a mutation is seen to be 0.
 
 Let's work thru example 2, which is one locus, two alleles, and HWE.  The mean genetic value is $$\bar G = G_{22} + 2(G_{12}+G_{22}) + 2\upsilon p^2.$$
+
+To get 3.1.4, I wrote $$\bar G = p^2G_{11} + 2pqG_{12} + q^2G_{22}$$ and $$\upsilon = \frac{1}{2}(G_{11}+G_{22})-G_{12},$$ which yielded $$\bar G = pG_{11}+qG_{22}+2pq\upsilon$$ after simplification.  My expression seems numerically equivalent to his 3.14.
+
+The average effects of $A_1$ and $A_2$ are then gotten through brute-force substitution and simplification.  The algebra is tedious, but it puts you in a place to finally get 3.15 and 3.16.
+
+The whole point of this exercise is 3.17.  The change in the $G$ terms now gives us offspring that differ from the population meant genetic value by half the additive effect of the parent, and the dominance terms aren't affecting that as they were before.
