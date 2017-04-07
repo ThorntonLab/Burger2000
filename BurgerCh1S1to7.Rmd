@@ -2,7 +2,9 @@
 title: "Burger CH1, Sections 1-7"
 author: "Kevin Thornton"
 date: "April 5, 2017"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 # Hardy-Weinberg
@@ -69,13 +71,13 @@ This is example 1, page 11.
 One locus, two alleles, and the pop is in HWE.  Genetic values are $G_{11} \neq G_{12} = G_{22},$ implying that $A_2$ is dominant.
 
 What is $G'_{12}$ in the next generation amongst the offspring of $A_{12}$ individuals?  
-$$
-\begin{aligned}
+
+\begin{align*}
 G'_{12} &= Pr(\mathrm{mate\ is\ }A_{11})Pr(G\mathrm{\ values\ in\ offpsring}) + \ldots \\
  &= p^2(\frac{1}{2}G_{11} + \frac{1}{2}G_{12})+2pq(\frac{1}{4}G_{11}+\frac{1}{2}G_{12}+\frac{1}{4}G_{22})+q^2(\frac{1}{2}G_{12}+\frac{1}{2}G_{22})\\
  &= \frac{1}{2}pG_{11} + (1-\frac{1}{2}p)G_{22}
-\end{aligned}
-$$
+\end{align*}
+
 
 But, the expected gentic value from $A_{22}$ offspring is $G_{22}$ due to the dominanace of $A_2$, and Medelian segregation complicates the relationship between offspring and parental genetic values.
 
@@ -107,57 +109,57 @@ Where $\bar G_{11,k}$ is the expecation of genotype $G_{11}$ at the $k^{th}$ loc
 
 The next step, coming from Wright, is too define the partial derivative of the population mean with respect to the allele frequency at the $k^{th}$ locus. It's straight forward derivative rules to see that $$\frac{\partial \bar G}{\partial p_k} = 2\alpha_{1,0,k} = 2(p_k(\bar G_{11,k} - \bar G_{12,k}) + (1-p_k)(\bar G_{12,k} - \bar G_{22,k})) $$ To tie this in to the derivations from the Burger book, I want to demonstrate that $$\alpha_{1,0,k} = (\gamma_{1,k} - \gamma_{2,k})$$ Which I can do assuming a biallelic locus in HWE, like example 2. In this case, due to equation 3.10 (remember $g_{12}=g_{21}$): 
 
-$$
-\begin{align}
+
+\begin{align*}
 \gamma_1 &= g_{11}p + g_{12}(1-p) \\ 
 \gamma_2 &= g_{12}p + g_{22}(1-p)
-\end{align}
-$$
+\end{align*}
+
 Therefore 
 
-$$
-\begin{align}
+
+\begin{align*}
 \gamma_1 - \gamma_2 &=  p(g_{11} - g_{12}) + (1-p)(g_{12} - g_{22}) \\ 
 \gamma_1 - \gamma_2 &=  p((G_{11} - \bar G) - (G_{12} - \bar G)) + (1-p)( (G_{12} - \bar G)  - (G_{22} - \bar G)) \\ 
 \gamma_1 - \gamma_2 &=  p(G_{11} - G_{12}) + (1-p)( G_{12}  - G_{22}) 
-\end{align}
-$$ 
+\end{align*}
+
 
 And, by generalization to this being the $k^{th}$ locus and assuming we can take expectation with respect to other loci, due to HWE and linkage equilibrium $$\gamma_{1,k} - \gamma_{2,k} =  p( \bar G_{11,k} - \bar G_{12,k}) + (1-p)( \bar G_{12,k}  - \bar G_{22,k}) = \alpha_{1,0,k} $$ Now we know that the derivative of the population mean with respect to the allele frequency is equal to twice the average effect. We can then plug that into our previously derived expression for variance 
-$$ 
-\begin{align}
+
+\begin{align*}
 \sigma_{A}^2 &= 2p(1-p)(\gamma_1 - \gamma_2)^2 \\
 \sigma_{A,k}^2 &= 2p(1-p)(\gamma_{1,k} - \gamma_{2,k})^2 \\
 \sigma_{A,k}^2 &= 2p(1-p)\alpha_{1,0,k}^2 \\
 \sigma_{A,k}^2 &= 2p(1-p)(\frac{1}{2}\frac{\partial \bar G}{\partial p_k})^2 
-\end{align}
-$$
+\end{align*}
+
 Let's move onto the dominance variance, by taking the second derivative:
 
-$$
-\begin{align}
+
+\begin{align*}
 \frac{\partial \bar G}{\partial p_{k}^2} &= 2\alpha_{0,1,k} \\
  &= 2( \bar G_{11,k} - 2 \bar G_{12,k} + \bar G_{22,k})
-\end{align}
-$$
+\end{align*}
+
 I wish to show that $\alpha_{0,1,k} = 2\upsilon_k$ which is pretty easy because $$ \alpha_{0,1,k} = \bar G_{11,k} + \bar G_{22,k} - 2 \bar G_{12,k} $$ and $$\upsilon_k = \frac{1}{2}(\bar G_{11,k} + \bar G_{12,k}) - \bar G_{12,k}$$ Burger showed in example 2 that the dominance variance is 
-$$
-\begin{align}
+
+\begin{align*}
 \sigma_{D}^2 &= 4\upsilon^2 p^2 (1-p)^2\\
 \sigma_{D,k}^2 &= 4\upsilon_{k}^2 p_{k}^2 (1-p_{k})^2 \\
 \sigma_{D,k}^2 &= (\alpha_{0,1,k})^2 p^2 (1-p)^2\\
 \sigma_{D,k}^2 &=  p^2 (1-p)^2(\frac{1}{2}\frac{\partial \bar G}{\partial p_{k}^2})
-\end{align}
-$$
+\end{align*}
+
 
 If you stare at these derivations long enough you will start to see a pattern. The order of the $\alpha_{L,Q,k}$ define the type of variance component as an L-additive by Q-dominance variance component. It is instructive to see a two locus example, so that you can see the  how epistative terms come about, however I defer to the Kojima paper for that.  Dominance is the highest order interaction that can exist in a single locus model, higher order variance components require taking partial derivative with respect to changing allele frequencies at multiple loci. It turns out the degree of additive variance is determined by how many first derivatives are taken and the degree of the dominance variance is determined by how many second derivatives. In general Kojima shows that
 
-$$
-\begin{align}
+
+\begin{align*}
 \alpha_{L,Q} &= \frac{1}{2^{L+Q}} \frac{\partial^{L+2Q} \bar G}{\prod_{j}^L \partial p_{j} \prod_{k}^{Q} \partial p_{k}^2} \;for\; j \neq k \\
 \\
 \sigma_{L,Q}^2 &= 2^{L}\prod_{j}^{L} p_j (1 - p_j) \prod_{k}^{Q}  p_{k}^2 (1 - p_k)^{2} (\alpha_{L,Q})^2
-\end{align}
-$$
+\end{align*}
+
 
 Basically, this allows you to take really complicated multi locus models and derive algebraic expressions for their variance components. I have added a mathematica notebook illustrating how to do this for a two-locus model that looks relatively simple but ends up having really weird variance components.
