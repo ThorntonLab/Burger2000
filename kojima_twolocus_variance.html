@@ -1,24 +1,330 @@
-<!doctype html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN"
+        "HTMLFiles/xhtml-math11-f.dtd">
 
-<html lang="en">
+<!-- Created by Wolfram Mathematica 9.0 for Students - Personal Use Only : www.wolfram.com -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8">
-
-  <title>The HTML5 Herald</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
-
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
-
-  <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
-<script type="text/javascript">
-var cdf = new cdfplugin();
-cdf.setDefaultContent('<a href="http://www.wolfram.com/cdf-player/"><img  src="kojima_twolocus_variance.cdf"></a>');
-cdf.embed('kojima_twolocus_variance.cdf', 1423, 3535);
-</script>
+ <title>
+  Untitled (Wolfram Mathematica 9.0 for Students - Personal Use Only : www.wolfram.com)
+ </title>
+ <link href="HTMLFiles/kojima_twolocus_variance.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-  <script src="js/scripts.js"></script>
+
+<p class="Title">
+ Kojima&rsquo;s method applied to a weird two locus genetic model
+</p>
+
+
+
+<p class="Subsection">
+ <span class="SectionInline">Define a weird genetic model</span>
+</p>
+
+
+
+<p class="Text">
+ Okay, so we make a model where there are two loci and thus nine genotypes. we can make a model that looks somewhat normal, but actually turns out to be weird.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_1.gif" alt="kojima_twolocus_variance_1.gif" width="407" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_2.gif" alt="kojima_twolocus_variance_2.gif" width="356" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_3.gif" alt="kojima_twolocus_variance_3.gif" width="110" height="31" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_4.gif" alt="kojima_twolocus_variance_4.gif" width="130" height="48" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ We need to make these vectors of possible marginal genotype frequencies in order to flesh the thing out. Mathematicas TensorProduct[] function woudl allow us to generalize this to arbitrary numbers of loci. Perhaps there is an automatic way to do this.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_5.gif" alt="kojima_twolocus_variance_5.gif" width="295" height="31" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ 
+</p>
+
+
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_6.gif" alt="kojima_twolocus_variance_6.gif" width="210" height="20" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_7.gif" alt="kojima_twolocus_variance_7.gif" width="210" height="20" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_8.gif" alt="kojima_twolocus_variance_8.gif" width="228" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_9.gif" alt="kojima_twolocus_variance_9.gif" width="1173" height="20" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ This is now a matrix of the contributions of each genotypic class to the population mean. To get the populaiton mean, we have to this sum up. We can do this by using Total[] or by crossproduct with vector of ones.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_10.gif" alt="kojima_twolocus_variance_10.gif" width="129" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_11.gif" alt="kojima_twolocus_variance_11.gif" width="505" height="54" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_12.gif" alt="kojima_twolocus_variance_12.gif" width="191" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_13.gif" alt="kojima_twolocus_variance_13.gif" width="66" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_14.gif" alt="kojima_twolocus_variance_14.gif" width="86" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_15.gif" alt="kojima_twolocus_variance_15.gif" width="1055" height="17" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_16.gif" alt="kojima_twolocus_variance_16.gif" width="437" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_17.gif" alt="kojima_twolocus_variance_17.gif" width="1055" height="17" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ 
+</p>
+
+
+
+<p class="Subsection">
+ <span class="SectionInline">Derive some variance components using Kojimas notation</span>
+</p>
+
+
+
+<p class="Subsection">
+ Additive variance
+</p>
+
+
+
+<p class="Text">
+ We have two loci, so the additive variance will involve&nbsp;&nbsp;taking the first derivative of the populaiton mean at both loci and multiplying respectively by the heterozgyosity at that loci.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_18.gif" alt="kojima_twolocus_variance_18.gif" width="758" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ 
+</p>
+
+
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_19.gif" alt="kojima_twolocus_variance_19.gif" width="1198" height="45" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_20.gif" alt="kojima_twolocus_variance_20.gif" width="112" height="31" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_21.gif" alt="kojima_twolocus_variance_21.gif" width="55" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_22.gif" alt="kojima_twolocus_variance_22.gif" width="737" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_23.gif" alt="kojima_twolocus_variance_23.gif" width="399" height="352" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_24.gif" alt="kojima_twolocus_variance_24.gif" width="776" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_25.gif" alt="kojima_twolocus_variance_25.gif" width="360" height="356" style="vertical-align:middle;" usemap="#map_25" />
+<map name="map_25">
+<area shape="rect" coords="21,337,355,4" title="0.2" nohref="" />
+<area shape="rect" coords="21,337,354,4" title="0.4" nohref="" />
+<area shape="rect" coords="30,337,340,4" title="0.6" nohref="" />
+<area shape="rect" coords="48,317,312,37" title="0.8" nohref="" />
+<area shape="rect" coords="72,293,282,76" title="1" nohref="" />
+<area shape="rect" coords="108,258,240,125" title="1.2" nohref="" />
+</map>
+</p>
+
+<p class="Subsection">
+ Dominance variance
+</p>
+
+
+
+<p class="Text">
+ Wow, that additive variance looks strange huh! But, if you change the original model to a more basic form, you will see that it is correct. Now we do the dominance.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_26.gif" alt="kojima_twolocus_variance_26.gif" width="955" height="31" style="vertical-align:middle" />
+</p>
+
+<p class="Subsection">
+ 
+</p>
+
+
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_27.gif" alt="kojima_twolocus_variance_27.gif" width="726" height="21" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_28.gif" alt="kojima_twolocus_variance_28.gif" width="522" height="31" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_29.gif" alt="kojima_twolocus_variance_29.gif" width="737" height="31" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_30.gif" alt="kojima_twolocus_variance_30.gif" width="360" height="276" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_31.gif" alt="kojima_twolocus_variance_31.gif" width="784" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_32.gif" alt="kojima_twolocus_variance_32.gif" width="360" height="356" style="vertical-align:middle;" usemap="#map_32" />
+<map name="map_32">
+<area shape="rect" coords="58,337,318,4" title="0.01" nohref="" />
+<area shape="rect" coords="77,337,299,4" title="0.02" nohref="" />
+<area shape="rect" coords="94,337,282,4" title="0.03" nohref="" />
+<area shape="rect" coords="112,337,265,3" title="0.04" nohref="" />
+<area shape="rect" coords="132,337,245,4" title="0.05" nohref="" />
+<area shape="rect" coords="161,337,214,4" title="0.06" nohref="" />
+</map>
+</p>
+
+<p class="Subsection">
+ Additive by additive epistatic variance
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_33.gif" alt="kojima_twolocus_variance_33.gif" width="614" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_34.gif" alt="kojima_twolocus_variance_34.gif" width="1087" height="17" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_35.gif" alt="kojima_twolocus_variance_35.gif" width="753" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_36.gif" alt="kojima_twolocus_variance_36.gif" width="409" height="247" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_37.gif" alt="kojima_twolocus_variance_37.gif" width="792" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_38.gif" alt="kojima_twolocus_variance_38.gif" width="360" height="356" style="vertical-align:middle;" usemap="#map_38" />
+<map name="map_38">
+<area shape="rect" coords="26,330,350,104" title="0.005" nohref="" />
+<area shape="rect" coords="30,322,346,137" title="0.01" nohref="" />
+<area shape="rect" coords="36,312,339,164" title="0.015" nohref="" />
+<area shape="rect" coords="44,299,332,191" title="0.02" nohref="" />
+<area shape="rect" coords="57,277,319,225" title="0.025" nohref="" />
+</map>
+</p>
+
+<p class="Subsection">
+ Narrow sense heritability, aka the percent of total variance that is due to additive variance
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_39.gif" alt="kojima_twolocus_variance_39.gif" width="648" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_40.gif" alt="kojima_twolocus_variance_40.gif" width="129" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_41.gif" alt="kojima_twolocus_variance_41.gif" width="1232" height="159" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/kojima_twolocus_variance_42.gif" alt="kojima_twolocus_variance_42.gif" width="948" height="13" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/kojima_twolocus_variance_43.gif" alt="kojima_twolocus_variance_43.gif" width="360" height="356" style="vertical-align:middle;" usemap="#map_43" />
+<map name="map_43">
+<area shape="rect" coords="215,130,330,17" title="0.1" nohref="" />
+<area shape="rect" coords="188,157,337,12" title="0.2" nohref="" />
+<area shape="rect" coords="166,180,342,9" title="0.3" nohref="" />
+<area shape="rect" coords="146,200,345,7" title="0.4" nohref="" />
+<area shape="rect" coords="127,220,348,6" title="0.5" nohref="" />
+<area shape="rect" coords="107,301,349,6" title="0.6" nohref="" />
+<area shape="rect" coords="43,318,351,4" title="0.7" nohref="" />
+<area shape="rect" coords="41,318,353,4" title="0.8" nohref="" />
+<area shape="rect" coords="40,319,354,3" title="0.9" nohref="" />
+</map>
+</p>
+
+
+
+
+<div style="font-family:Helvetica; font-size:11px; width:100%; border:1px none #999999; border-top-style:solid; padding-top:2px; margin-top:20px;">
+ <a href="http://www.wolfram.com/products/mathematica/" style="color:#000; text-decoration:none;">
+  <img src="HTMLFiles/spikeyIcon.png" alt="Spikey" width="20" height="21" style="padding-right:2px; border:0px solid white; vertical-align:middle;" />
+  <span style="color:#555555">Created with</span> Wolfram <span style="font-style: italic;">Mathematica</span> 9.0
+ </a>
+</div>
 </body>
+
 </html>
