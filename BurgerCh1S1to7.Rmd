@@ -163,3 +163,26 @@ If you stare at these derivations long enough you will start to see a pattern. T
 
 
 Basically, this allows you to take really complicated multi locus models and derive algebraic expressions for their variance components. I have added a mathematica notebook illustrating how to do this for a two-locus model that looks relatively simple but ends up having really weird variance components.
+
+## The correlation amongst relatives.
+
+Consider the correlation in genetic value between parent and offspring.  The measure used is Pearson's correlation coefficient, which has the general formulat $$ Cor(x,y) = \frac{E(x-\bar x)E(y-\bar y)}{\sigma_x\sigma_y}.$$
+
+For our model, there are some simplifications.  The least-squares method means that it is the deviations from the population mean that is relevant, hence $\bar x = \bar y.$  Further, $\sigma_x = \sigma_y$ because the genetic variance remains constant across generations. (I am unsure if there's an explicit need to assume HWE here?.)  Thus, $\sigma_x\sigma_y = \sigma_G^2$, the total genetic variance.  These simplifications result in representing the correlation between relatives as a quantity that is relative to the total genetic variance, $$Cor(G_1G_2) = \frac{E(G_1-\bar G)E(G_2 - \bar G)}{\sigma_G^2}.$$
+
+Arriving at an explicit expression is another exercise in exhaustive enumeration of all possible matings and the conditional probabilities of offspring trait values given those matings.  The parent-offspring correlation is the probability that the parent's genotype is $A_iA_j$ and that the offspring's is $A_kA_l$, giving the following set of equations (the first two only...):
+
+\begin{align*}
+Pr(P = A_iA_i,O=A_iA_j) &= p_i^2Pr(other\ allele\ is\ A_j) \times \frac{1}{2}\\
+ &= p_i^2p_j\\
+Pr(P = A_iA_j,O=A_iA_j) &= 2p_ip_j\frac{1}{2}Pr(other\ allele\ is\ A_i) + \frac{1}{2}Pr(other\ allele\ is\ A_j) \\
+&= 2p_ip_j \times (\frac{1}{2}p_i + \frac{1}{2}p_j)
+\end{align*}
+
+To get the covariance, we go back to the definition of the deviation of a genotype from the population mean, $g_{ij} = \gamma_i + \gamma_j + \upsilon_{ij}.$  The numerator of the covariance is the appropriate sums over the probabilities of offspring genotypes times their deviations, which is the ugly set of sums middle of page 14.  Many of the terms are identical or otherwise fold together once some equivalences in the indexing are noted. (It isn't super-easy to see, IMO.)
+
+If I understand correctly, we're summing over everything, and the sum over all $i$ and $j$ times $\upsilon_{ij}$ is constrained to be zero by 3.7.  Thus, the numerator of the correlation b/w parent and offspring is $\frac{1}{2}\sigma_A^2$, and the total parent-offspring correlation is $$\frac{1}{2}\frac{\sigma_A^2}{\sigma_G}.$$  Following tradition, $h^2 = \frac{\sigma_A^2}{\sigma_G}$ is the *narrow-sense* heritability of the trait.
+
+It is not proven in the book (and I didn't work it through), but the correlation between fill sibs depends on the dominance deviation, giving a way to estimate the contribution of dominance through family studies.
+
+Many other relative-relative correlations are simply the relatedness times $h^2$.
