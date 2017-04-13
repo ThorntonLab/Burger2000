@@ -1,0 +1,309 @@
+---
+title: "Burger CH1, Sections 8-11"
+author: "Jaleal Sanjak"
+date: "April 5, 2017"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# Population Growth
+
+## Discrete, non-overlapping generations
+
+In a population of size $N(t)$ at generations $t= 0,1,2,3..$, we can express the population size in the next generation as the product of the populations current size by the average number of offspring per individual. This average number of offspring we call the average fitness or $W$. It shoudl be intuitively obvious from previous work that this recursion will compound W over time starting from an initial population size.
+
+$$N(t) = WN(t-1) = W^2 N(t-2)= ... = W^{t} N(0)$$
+
+If we let $W= 1+ s$ then 
+
+\begin{align*}
+ N(t+1) &=WN(t) \\
+ N(t+1) &=N(t) + sN(t)\\
+\Delta N(t) &= N(t+1) - N(t) \\
+\Delta N(t) &= sN(t) \\
+\end{align*}
+
+Therefore is $s<0$ then the population shrinks and if $s>0$ it expands. 
+
+Now, if we consider there to be multiple types of individuals in the population, the total population size is $$N(t) = \sum_i n_i$$ and the mean fitness of the population is $$\bar W  - \sum_i W_i \frac{n_i (t) }{N(t)}$$ This clearly implies that in an asexual population $$n'_{i} = W_i n_i$$ and the whole population changes as $$N' - \sum_i n'_i = \sum_i  W_i n_i = \bar W N$$ 
+
+Now, because this average fitness is the same as before, the whole population will change accoring to the same rule, except that $\bar W$ may change over time. So, instead of compounding we take the cumulative product over the time-depended $\bar W(t)$
+
+$$N(t) = \prod_{\tau = 0 }^{t-1} \bar W(\tau) N(0)$$
+
+## Continuous time
+
+In continuous time, this is actually just as simple, especialy if we remeber our introductory ODE's. If there is a birth and death rate for individuals in the population, then this can be expressed as a compound parameter call $(b-d) = m$ which is the intrinsic growth rate of the population.
+
+The time dynamics of the population size are then specified by the following ODE $$\frac{dN}{dt} = \dot N = mN$$. This one of the most basic ODEs and it gives you an exponential function with parameter $m$ and initial populationsize $N(0)$ . I am not going to show how to solve this one, because instead I will show how to solve the more complicated logisitic growth form.
+
+$$ N(t) = N(0)e^{mt}$$
+
+Which if we look back at our other equation then $$W=e^m$$ or $$m=log(W)$$. It turns out that around $x \approx 0$ that $log(1+x) \approx x$. This means that if $W=1+s$ then $m=log(W) \approx s$. 
+
+Let's return to the situation where we have multiple types of individuals in the population. By the same logic we used in the discrete time case we can say that $$\frac{dN}{dt} = \sum_i \frac{d n_i}{dt}= \sum_i m_i n_i$$ Where the $m_i$ are the group specific instrinsic growth rates. To show that the $m=\bar m$ we can do the following
+
+\begin{align*}
+\frac{dN}{dt} &= \sum_i m_i n_i \\
+ &= \sum_i m_i n_i \frac{N}{N}\\
+ &= \sum_i m_i p_i N \\
+ &= \bar m N \\
+\end{align*}
+
+Using these results, we can move into looking at the dynamics of the group frequencies by showing that (using elementary derivative rules)
+
+
+\begin{align*}
+p_i &= \frac{n_i}{N} \\\
+\dot p_i &= \frac{\dot n_i N  - n_i \dot N }{N^2} \\
+ &= \frac{\dot n_i - p_i \dot N }{N} \\
+ &= \frac{ n_i m_i - p_i \bar m N }{N} \\
+ &=  p_i m_i - p_i \bar m  \\
+ &=  p_i( m_i - \bar m ) \\
+\end{align*}
+
+Clearly, $\bar m$ changes over time, as $\bar W$it did in the discrete case. The rate are which it changes depends on the fitnesses and rates of change of each class. If we understand that $\sum_i p_i = 1$  implies that $\sum_i \dot p_i =0$ then we can show 
+
+\begin{align*}
+ \dot{\bar m } &= \sum_i m_i \dot p_i \\
+ &= \sum_i m_i \dot p_i  +  \sum_i \bar m \dot p_i\\
+ &= \sum_i \dot p_i( m_i  + \bar m ) \\
+  &= \sum_i p_i( m_i - \bar m )( m_i  + \bar m )\\
+&= \sum_i p_i( m_i - \bar m )^2 = \sigma_m^2
+\end{align*}
+
+Which shows that the change in mean fitness is equal to the variance in fitnesses.
+
+## Population regulation
+
+If instead of infinite population growth, we might assume that there is some density dependence. As the population growths or shrinks, its rate of change may slow and the population will reach an equilibrium. One such model is called the logistic growth equation and it is described the following ODE
+
+$$ \dot N  = \rho N (1 - \frac{N}{K})$$  Where $\rho$ is the intrinsic growth rate and $K$ is the carrying capactiy. I will demonstrate how to solve this equation for the sake of demonstration. Basically you use separation of variables and partial fraction decomposition.
+
+\begin{align*}
+ \dot N &= \frac{d N}{dt} = \rho N (1 - \frac{N}{K}) \\
+ \frac{dN}{N(1-\frac{N}{K})} &= \rho dt \\
+  \frac{K dN}{N(K-N)} &= \rho dt \\
+  (\frac{1}{N} + \frac{1}{K-N}) dN &= \rho dt \\
+ ln(N) - ln(K-N) &= - \rho t + C \\
+ln(\frac{K-N}{N}) &= - \rho t + C \\
+\frac{K-N}{N} &= A e^{\rho t} \\
+N_t&= \frac{K}{1 + Ae^{\rho t}}\\
+N_0&= \frac{K}{1 + A} \\
+A &=\frac{K}{N_0} - 1\\
+N_t&= \frac{KN_0 e^{\rho t}}{K + (N_0e^{\rho t} -1)}
+\end{align*}
+
+By using the same types of arguments that we used in the case of exponential growth we can conclude that $$\dot p_i = p_i(\rho_i - \bar \rho)$$.
+
+This makes it very clear that the deterministic frequency dynamics are not dependent on the changes in the population size. No matter what happens to the population dynamics, the expected allele frequency dynamics are unchanged. It is my belief that the variance of many properties will change upon changes to the population size. Basically, the effects of drift are heteroscedastic with respect to the population size.f
+
+
+# Selection at a single locus
+
+## Asexual haploids 
+
+In the case of selection at single locus in a haploid asexual population is exactly equivalent to the population dynamics we described earlier. The k typeds are just the individuals with the different alleles. This means we can say 
+
+\begin{align*}
+n_i' &= W_i n_i \\
+\frac{n_i'}{N'} &= \frac{W_i n_i}{N'} \\
+p_i' &= \frac{W_i n_i}{\bar W N} \\
+p_i' &= \frac{W_i p_i}{\bar W }
+\end{align*}
+
+By inserting the recursion formulas from the earlier section, we get $$ p_i(t) = \frac{p_i(0) W_i^t}{\sum_j p_j(0) W_j^t}$$ 
+
+## Diploids
+
+It turns out that with some simple algebra you can show that the diploid situation is the same once we reach Hardy-Weinberg equilibrium. It is also important to note that we can use relative fitness instead of absolute fitness without any loss of generality because that amounts to mutliplying by a constant
+
+## Two allele model
+
+Because of its apparent biological relevance, it will be useful to explore the two-allele model in some detail.
+```{r results = "asis",echo=F} 
+library(xtable)
+df = data.frame(Geno= c(" A1 A1","A2 A2","A2 A2"),Fitness=c(" 1","1-hs","1-s"), frequency=c(" p^2","2p(1-p)","(1-p)^2"))
+print(xtable::xtable(t(df), caption = "Table of genotypes, frequencies and fitness",),type = "html",include.colnames=FALSE, html.table.attributes = "border=1") 
+
+```
+
+With this model, the marginal fitness of alleles type one is 
+
+\begin{align*}
+W_1 &= W_{11}p  + W_{12}(1-p) \\
+&= 1  + (1-hs)(1-p) \\
+&= 1 - hs + hsp 
+\end{align*}'
+
+For allele two 
+
+\begin{align*}
+W_2 &= W_{12}p  + W_{22}(1-p) \\
+&=(1-hs)p + (1-s)(1-p) \\
+&= p - hsp + 1 -p -s + sp  \\
+&= 1 - s + sp(1 - h)
+\end{align*}
+
+The population mean fitneess $\bar W$ thus is the weighted average of the marginal fitnesses
+
+\begin{align*}
+\bar W & = \sum_i W_i p_i \\
+ &= (1 - hs + hsp)p  + (1 - s + sp(1 - h))(1-p) \\
+ &= 1 - s + 2sp(1-h) - sp^2(1-2h)
+\end{align*}
+
+Differentiating the population mean fitness with respect to the allele frequency leads to some very interesting results
+
+\begin{align*}
+\frac{d \bar W}{dp} & =\frac{d}{dp} 1 - s + 2sp(1-h) - sp^2(1-2h)\\
+ & =2s(1-h) - 2sp(1-2h) \\
+ & = 2(W_1 - W_2)
+\end{align*}
+
+If we look at the expression for $\Delta p$ we see and cool equivalence
+\begin{align*}
+\Delta p &= p' - p \\
+ &= \frac{p W_1}{\bar W} - p \\
+ &= \frac{p W_1 - p\bar W }{\bar W} \\
+ &= \frac{p W_1 - p^2 W_1 - p(1-p) W_2 }{\bar W} \\
+ &= \frac{p(1-p) (W_1 -W_2) }{\bar W} \\
+ &= \frac{p(1-p)}{2 \bar W} \frac{d \bar W}{dp}
+\end{align*}
+
+This also implies that if h>1 or h<0, then we have over or under dominance. In both cases the equilibrium frequency is
+\begin{align*}
+\Delta p  &= \frac{p(1-p)}{2 \bar W} \frac{d \bar W}{dp}\\
+ &= \frac{p(1-p)}{ \bar W} s(1-h - (1-2h)p)\\
+0  &= \frac{\hat p (1-\hat p)}{ \bar W} s(1-h - (1-2h) \hat p)\\
+\hat p &= \frac{1-h}{1-2h}
+\end{align*}
+
+But this equilibrium is unstable for underdominance, and it is stable for overdominance.
+
+## The fundamental theorem of natural selection
+
+This section is all about deriving the fundamentla theorem of natural selection, which states that the change in mean fitness is proportional to the addtive genetic variance in fitness.
+
+We start by first demonstratin that the mean fitness is strictly non-decreasing in a deterministic model. Assuming Hardy Weinberg equilibrium
+\begin{align*}
+\bar W &= \sum_{i,j} W_{ij}p_i p_j \\
+\frac{\partial \bar W}{\partial p_i} &= 2\sum_{j} W_{ij}p_j \\
+&= 2 W_{i}
+\end{align*}
+
+Using this plus our results from 9.7, we see that we can express the the frequency in the next generation by:
+
+\begin{align*}
+p_i' &= \frac{W_i p_i}{\bar W} \\
+p_i' &= \frac{W_i p_i}{\sum_j W_j p_j} \\
+p_i' &= \frac{\frac{\partial \bar W}{\partial p_i} p_i}{\sum_j \frac{\partial \bar W}{\partial p_j} p_j}
+\end{align*}
+
+Then we rely on some theorems about lyapunov functions to show us that we can guarantee that $\bar W$ does not decrease and only doesn't increase at a stable point. The next derivation is, in my opinion, the climax of this chapter. The algebra was actually somewhat brutal for me, so I am not going to type it out. But, I will try to give pointers where I got stuck.
+
+\begin{align*}
+\Delta \bar W &=  \bar W ' - \bar W \\
+&=  \sum_{ij}W_{ij}p_i'p_j' -  \sum_{ij}W_{ij}p_ip_j \\
+&=  \sum_{ij}W_{ij}(\frac{p_i W_i}{\bar W})(\frac{p_j W_j}{\bar W}) -  \sum_{ij}W_{ij}p_ip_j\frac{\bar W^2}{\bar W^2} \\
+&=  \frac{1}{\bar W ^2}\sum_{ij}p_ip_jW_{ij}(W_iW_j - \bar W^2) \\
+&=  \frac{1}{\bar W ^2}\sum_{ij}p_ip_j(W_iW_jW_{ij} - W_{ij}\bar W^2) \\
+&=  \frac{1}{\bar W ^2}\sum_{ij}p_ip_jW_iW_j(W_{ij} - \frac{W_{ij}\bar W^2}{W_iW_j}) \\
+&=  \frac{1}{\bar W ^2}\sum_{ij}p_ip_jW_iW_j(W_{ij} - \frac{W_{ij}\bar W^2}{\sum_i W_{ij} p_i \sum_j W_{ij} p_j}) \\
+&=  \frac{1}{\bar W ^2}\sum_{ij}p_ip_jW_iW_j(W_{ij} - \frac{\bar W^2}{\sum_i p_i \sum_j W_{ij} p_j}) \\
+&=  \frac{1}{\bar W ^2}\sum_{ij}p_ip_jW_iW_j(W_{ij} - \bar W)
+\end{align*}
+
+The next step, was not intuitive to me at all and I had to do it via brute force backwards. It works out. The way to do it is to just slam the $(W_i -\bar W)$ and $(W_j - \bar W)$ terms in there and start multiplying, you will notice that eventually you can pull our the original formula with a whole bunch of extra terms left over. Those extra terms end up collapsing to the formula for $\frac{\sigma_A^2}{\bar W}$
+
+The big equation is 9.16 $$ \Delta \bar W = \frac{\sigma_A}{\bar W} + \frac{1}{\bar W^2} \sum_{ij}\sum_{ij}p_ip_j(W_i-\bar W)(W_j - \bar W)(W_{ij} - \bar W)$$
+
+
+The trick to showing that everythign other than the variance term cancels out under an addtive model actually requires the Nagylaki decomposition of $W_{ij} - \bar W$ first, I think. The way to show that is to assume that fitness is an additive combination of allelic effects and a dominance deviation. I am going to show this in terms of the genetic values from section 3 and then ask you to use your imagination and switch genetic value for fitness.
+
+\begin{align*}
+ G_{ij} - \bar G &= g_{ij} \\
+ &= \gamma_i + \gamma_j + \upsilon_{ij}\\
+ &= g_i + g_j + \upsilon_{ij} \\
+&= \sum_i g_{ij}p_i + \sum_j g_{ij}p_j \upsilon_{ij}\\
+&= \sum_i (G_{ij} - \bar G) p_i + \sum_j (G_{ij} - \bar G)p_j +  \upsilon_{ij}\\
+&= (G_{j} - \bar G) + (G_{i} - \bar G) +  \upsilon_{ij}\\
+G_{ij} - \bar G &= (G_{j} - \bar G) + (G_{i} - \bar G) +  \upsilon_{ij}\\
+W_{ij} - \bar W &= (W_{j} - \bar W) + (W_{i} - \bar W) +  \upsilon_{ij} 
+\end{align*}
+
+This expression allows us to get rid of all terms in the expression for $\Delta \bar W$ that don't depend on the dominance deviation
+Looking at the right side term (R) of that equation: 
+\begin{align*}
+R &= \frac{1}{\bar W^2} \sum_{ij}p_ip_j(W_i-\bar W)(W_j - \bar W)(W_{ij} - \bar W) \\
+W^2R &= \sum_{ij}p_ip_j(W_i-\bar W)(W_j - \bar W)(  (W_{i} - \bar W) + (W_{j} - \bar W) +  \upsilon_{ij})\\
+ &=  \sum_{ij}p_ip_j(W_i - \bar W)(W_j - \bar W)(W_{i} - \bar W) +... \\
+ &=  \sum_{i}p_i(W_i - \bar W)^2\sum_{j}p_j(W_j - \bar W) +... \\
+ &=  \sum_{i}p_i(W_i - \bar W)^2 (\sum_{j}p_j(W_j) - \sum_{j}p_j\bar W )+... \\
+ &=  \sum_{i}p_i(W_i - \bar W)^2 (0)+... \\
+ &=  \sum_{ij}p_ip_j(W_i-\bar W)(W_j - \bar W)\upsilon_{ij}
+\end{align*}
+
+Then, we use the Cauchy-Schwarz inequality to put a bound on this R value. In english, the Cauchy-Schwarz inequality states that the square of the the sum of products is less than or equal to the product of squares of the sums each term in the products.
+
+$$( \sum_i u_i v_i )^2 \leq ( \sum_i u_i^2) (\sum_k v_k^2 )$$
+
+It's pretty easy to see how this turns into $$(\bar W^2 R)^2 \leq \sum_{ij} p_i p_j \upsilon_{ij}^2  \sum_{ij} p_i p_j (W_i - \bar W)^2(W_j - \bar W)^2$$  and thus $$\bar W^2 |R| \leq (\sum_{ij} p_i p_j \upsilon_{ij}^2)^{\frac{1}{2}}  (\sum_{ij} p_i p_j (W_i - \bar W)^2(W_j - \bar W)^2)^{\frac{1}{2}}= \frac{1}{2}\sigma_D^2\sigma_A^2$$. He then does some trickery with inequalities to demonstrate that the change in mean fitness $\Delta \bar W$ depends only on the addtive variance upto a second order in $s$. The important trick relies on something called Popoviciu's inequality for variances, which when applied to our context ensures that $\sigma^2 \leq \frac{1}{4}(W_{max} - W_{min})$
+
+So, when s<<1 we can very easily ignore terms of $O(s^3)$. Which means that $$ \Delta \bar W = \frac{\sigma_A}{\bar W} + O(s^3)$$
+
+## Equilibria and dynamics
+
+This section is really best just read and discussed. The derivations are not super important, in my opinion. I do think it is useful to conceptualize the allele frequency simplex and the idea that dynamics take place on it. Also, it's nice to visualized the express the fitnesses as matrices and the frequencies as a vector, this makes stuff much more clear to me.
+
+# Continuous time selection
+
+## Basic model 
+
+This section is going to have a lot of analogies to section 8, but it is worth trying to internalize why it isn't the same. Now we have diploids, with genotypes, rather than just fitness classes. The diploids don't pass on genotypes, they pass on genes according to mendel. This is distinct from the asexual model. The based equation starts with $$ \dot n_i = \sum_j N P_{ij} m_{ij}$$ If we assume that Hardy-Weinberg applies at all time, which is actually a bad assumption here, then $$ \dot n_i = m_i n_i$$ and $$\dot N = \sum_i m_i n_i = \bar m N$$ The last line looks very familiar and that is a good thing, becaause by analogy to our earlier work we can get the same equation for the frequency dyanmics $$\dot p_i = p_i (m_i - \bar m)$$ It is important to restate the fact that this assume HWE over all times, which is actually guarateed to be false because selection disrupts it. The full equations depend on the genotype frequencies and are apparently more complicated.
+
+## Discrete versus continuous time
+
+If we assume that fitnesses in the discrete model can be defined as a constant plus the selection coefficient by the intrinsic growth rate then we can ensure that all the dynamics stay the same. Also, we can show that the continuos time model approximates the discrete time model for weak selection.
+
+Let $$W_i = a + sm_i $$ and $$\bar W = a + s \bar m$$. Then we can assume $a=1$ (any constant) and rescale time $\tau = st$. THis change of time scale lets us define a new frequency variable on the continuous time scale that should behave like the discrete model.
+
+\begin{align*}
+q_i &= q_{\tau} = p_i(t) \\
+q_{\tau + s} &= p(t+1) \\
+\frac{d}{d\tau}q  &= \lim_{s\to 0} \frac{1}{s} \Delta p
+\end{align*}
+
+Because of how we formulated fitness we get the following$$\Delta p = \frac{sp_i (m_i - \bar m)}{1 + s\bar m}$$ and because selection is weak the denominator is close to one and $$\Delta p \approx sp_i (m_i - \bar m) \approx s \dot q$$
+
+## Gradients and the fundamental theorem
+
+Using analogy to our asexual model and symmetry of heterozygous classes. We can easily say that $$\dot{\bar m} = 2 \sum_{i,j} m_{ij} p_j \dot p_i = 2 \sum_i m_i \dot p_i$$
+
+We showed earlier that $$ 2 \sum_i m_i \dot p_i = \sigma_A^2$$
+
+It is fun to think now about the dynamical system on the frequency simplex. If we provide a proper distance metric, because the frequency simplex is a non-Euclidean space, then the system can be described a gradient system with the mean fitness as a potential function. A gradient system is is a system of ODE's that are described by the vector of first partial derivatives of a potential function with respect to each variable.
+
+$$\dot x = - \nabla V(x) = (\frac{\partial V}{\partial x_1},...,\frac{\partial V}{\partial x_k})^{\top}$$
+
+He then defines an interesting covariance matrix of frequencies $$ g^{ij} = p_i{\delta_{ij} - p_j}$$ where the delta function makes it so that $g^{ii} = p_i(1-p_i)$ and $g^{ij}=-p_ip_j$ otherwise. Staring from our previously derived relationships
+
+\begin{align*}
+\dot p_i &= p_i(m_i - \bar m)\\
+& =  p_im_i - p_i\bar m \\
+& =  p_im_i - p_i(\sum_j p_j m_j) \\
+& =  p_i m_i - p_i^2 m_i - (\sum_{j \neq i} p_i p_j m_j) \\
+& =  p_i(1-p_i) m_i - (\sum_{j \neq i} p_i p_j m_j) \\
+& = \frac{1}{2}\sum_{j} p_i(\delta_{ij} p_j) 2 m_j \\
+& = \frac{1}{2}\sum_{j} g^{ij} \frac{\partial \bar m}{\partial p_j}\
+\end{align*}
+
+Which when expressed in matrix form looks like $$ \textbf{p} = \frac{1}{2}G_{\textbf{p}}\nabla \bar m$$ The distance metric of this system, is defined by norm on p which is actually pretty straigt forward because it is the root of the quadratic form of $G^{-1}$ in $p$ Specifically if we think of a frequency unit change of $p \to p + d$ then the norm is $$ \| d \|_{p} = \sqrt{dG_p^{-1}d} = \sqrt{\sum_i\frac{d_i^2}{p_i}}$$ 
+
+This can be expressed in terms of a covariance between the fitness of a genotype of and the number of alleles (divided by two) of each type it contains. You just need to think about this to see why it is true. In a later entry I will show this more explicitly during a derivation of the Robertson-Price idenity.Inuitively we can see that the allele frequencies are going to change according to their covariance with fitness, but that the alleles are contained within genotypes and it is the fitness of the genotypes that really matters. Burger then shows how in the biallelic case, we get the classic representation
+
+$$\dot p = \frac{p(1-p)}{2} \frac{d\bar m}{dp}$$
+
+We then run into a pitfall of thinking about things in terms of adaptive landscapes. With single locus, its nice to think about evolution as a hill climbing process, but this is in general not true when there are multiple loci. Also, Fisher believed that the potential function ($\bar m$) would be impacted by the environment and could not be truly useful in this way. Basically, the idea of reasoning about high dimensional adaptive landscapes is probably not worth your time, because as Steve Frank told me "trust me, you don't understand them."
+
