@@ -3,8 +3,8 @@ title: "Burger CH1, Sections 8-11"
 author: "Jaleal Sanjak"
 date: "April 5, 2017"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 # Population Growth
@@ -299,7 +299,32 @@ He then defines an interesting covariance matrix of frequencies $$ g^{ij} = p_i{
 & = \frac{1}{2}\sum_{j} g^{ij} \frac{\partial \bar m}{\partial p_j}\
 \end{align*}
 
-Which when expressed in matrix form looks like $$ \textbf{p} = \frac{1}{2}G_{\textbf{p}}\nabla \bar m$$ The distance metric of this system, is defined by norm on p which is actually pretty straigt forward because it is the root of the quadratic form of $G^{-1}$ in $p$ Specifically if we think of a frequency unit change of $p \to p + d$ then the norm is $$ \| d \|_{p} = \sqrt{dG_p^{-1}d} = \sqrt{\sum_i\frac{d_i^2}{p_i}}$$ 
+Which when expressed in matrix form looks like $$ \dot{ \textbf{p}} = \frac{1}{2}G_{\textbf{p}}\nabla \bar m$$ 
+
+Let's clarify this gradient system business a bit. If we have a system where $$\dot x = - \nabla V(x)$$ Where $V(x)$ is vector valued potential function, then we can define the time derivative in this way. $$ \dot V(x) = \nabla V(x)^{\top} \dot x  $$ This follows from the chain rule:
+
+\begin{align*}
+z &= V(x)\\
+x &= f(t)\\
+\frac{dz}{dt} &= \frac{dz}{dx}\frac{dx}{dt} \\
+\dot V(x) &=  \nabla V(x)^{\top} \dot x \\
+\dot V(x) &=  |\nabla V(x)^{2} |
+\end{align*}
+
+
+If we consider the space of all possible change of allele frequencies, the tangent space, then we can define an innder product $$\langle \xi, \eta \rangle_x = \xi^{\top}G_{x}^{-1}\eta = \sum_{i=1}^{k}\frac{\xi_i \eta_i}{x_i}$$ From this inner product definition we can define the distance metric of this system. It is defined by norm on p which is actually pretty straigt forward because it is the root of the quadratic form of $G^{-1}$ in $p$ Specifically if we think of a frequency unit change of $p \to p + d$ then the norm is $$ \| d \|_{p} = \sqrt{dG_p^{-1}d} = \sqrt{\sum_i\frac{d_i^2}{p_i}}$$  
+
+Now to show that this is in fact a generalized gradient system, we consider the fact that for any linear mapping there is an inner product and a scaling such that its geometry is euclidean. The gradient in this geometry we are going to call $\tilde \nabla V(x)$.
+
+Earlier we showed this to be true
+$$D_x V(\xi) = \langle \tilde \nabla V(x), \xi \rangle_x$$
+Which by the euclidean inner product is 
+$$ \nabla V(x)^{\top}\xi = \tilde \nabla V(x)^{\top} G_{x}^{-1} \xi$$
+Thus $$G_x \nabla V(x) = \tilde \nabla V(x) $$
+and $$ \dot{\textbf{p}} = \frac{1}{2}G_{\textbf{p}}\nabla \bar m$$  $$ \dot{ \textbf{p}} = \frac{1}{2} \tilde \nabla \bar m$$
+
+This implies that the distance between two allele frequency states is $$d(p,q) = 2 arccos(\sum_i \sqrt{p_i q_i})$$ I will derive this in class, not here because I use alot of figures which I don't want to write out.
+
 
 This can be expressed in terms of a covariance between the fitness of a genotype of and the number of alleles (divided by two) of each type it contains. You just need to think about this to see why it is true. In a later entry I will show this more explicitly during a derivation of the Robertson-Price idenity.Inuitively we can see that the allele frequencies are going to change according to their covariance with fitness, but that the alleles are contained within genotypes and it is the fitness of the genotypes that really matters. Burger then shows how in the biallelic case, we get the classic representation
 
