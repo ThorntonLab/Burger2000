@@ -213,7 +213,7 @@ p_i' &amp;= \frac{W_i p_i}{\bar W }
 </div>
 <div id="two-allele-model" class="section level2">
 <h2>Two allele model</h2>
-Because of its apparent biological relevance, it will be useful to explore the two-allele model in some detail. <!-- html table generated in R 3.3.2 by xtable 1.8-2 package --> <!-- Thu Apr 13 09:14:35 2017 -->
+Because of its apparent biological relevance, it will be useful to explore the two-allele model in some detail. <!-- html table generated in R 3.3.2 by xtable 1.8-2 package --> <!-- Tue Apr 18 10:16:02 2017 -->
 <table border="1">
 <caption align="bottom">
 Table of genotypes, frequencies and fitness
@@ -398,7 +398,19 @@ q_{\tau + s} &amp;= p(t+1) \\
 &amp; = \frac{1}{2}\sum_{j} p_i(\delta_{ij} p_j) 2 m_j \\
 &amp; = \frac{1}{2}\sum_{j} g^{ij} \frac{\partial \bar m}{\partial p_j}\
 \end{align*}\]</span>
-<p>Which when expressed in matrix form looks like <span class="math display">\[ \textbf{p} = \frac{1}{2}G_{\textbf{p}}\nabla \bar m\]</span> The distance metric of this system, is defined by norm on p which is actually pretty straigt forward because it is the root of the quadratic form of <span class="math inline">\(G^{-1}\)</span> in <span class="math inline">\(p\)</span> Specifically if we think of a frequency unit change of <span class="math inline">\(p \to p + d\)</span> then the norm is <span class="math display">\[ \| d \|_{p} = \sqrt{dG_p^{-1}d} = \sqrt{\sum_i\frac{d_i^2}{p_i}}\]</span></p>
+<p>Which when expressed in matrix form looks like <span class="math display">\[ \dot{ \textbf{p}} = \frac{1}{2}G_{\textbf{p}}\nabla \bar m\]</span></p>
+<p>Let’s clarify this gradient system business a bit. If we have a system where <span class="math display">\[\dot x = - \nabla V(x)\]</span> Where <span class="math inline">\(V(x)\)</span> is vector valued potential function, then we can define the time derivative in this way. <span class="math display">\[ \dot V(x) = \nabla V(x)^{\top} \dot x  \]</span> This follows from the chain rule:</p>
+<span class="math display">\[\begin{align*}
+z &amp;= V(x)\\
+x &amp;= f(t)\\
+\frac{dz}{dt} &amp;= \frac{dz}{dx}\frac{dx}{dt} \\
+\dot V(x) &amp;=  \nabla V(x)^{\top} \dot x \\
+\dot V(x) &amp;=  |\nabla V(x)^{2} |
+\end{align*}\]</span>
+<p>If we consider the space of all possible change of allele frequencies, the tangent space, then we can define an innder product <span class="math display">\[\langle \xi, \eta \rangle_x = \xi^{\top}G_{x}^{-1}\eta = \sum_{i=1}^{k}\frac{\xi_i \eta_i}{x_i}\]</span> From this inner product definition we can define the distance metric of this system. It is defined by norm on p which is actually pretty straigt forward because it is the root of the quadratic form of <span class="math inline">\(G^{-1}\)</span> in <span class="math inline">\(p\)</span> Specifically if we think of a frequency unit change of <span class="math inline">\(p \to p + d\)</span> then the norm is <span class="math display">\[ \| d \|_{p} = \sqrt{dG_p^{-1}d} = \sqrt{\sum_i\frac{d_i^2}{p_i}}\]</span></p>
+<p>Now to show that this is in fact a generalized gradient system, we consider the fact that for any linear mapping there is an inner product and a scaling such that its geometry is euclidean. The gradient in this geometry we are going to call <span class="math inline">\(\tilde \nabla V(x)\)</span>.</p>
+<p>Earlier we showed this to be true <span class="math display">\[D_x V(\xi) = \langle \tilde \nabla V(x), \xi \rangle_x\]</span> Which by the euclidean inner product is <span class="math display">\[ \nabla V(x)^{\top}\xi = \tilde \nabla V(x)^{\top} G_{x}^{-1} \xi\]</span> Thus <span class="math display">\[G_x \nabla V(x) = \tilde \nabla V(x) \]</span> and <span class="math display">\[ \dot{\textbf{p}} = \frac{1}{2}G_{\textbf{p}}\nabla \bar m\]</span> <span class="math display">\[ \dot{ \textbf{p}} = \frac{1}{2} \tilde \nabla \bar m\]</span></p>
+<p>This implies that the distance between two allele frequency states is <span class="math display">\[d(p,q) = 2 arccos(\sum_i \sqrt{p_i q_i})\]</span> I will derive this in class, not here because I use alot of figures which I don’t want to write out.</p>
 <p>This can be expressed in terms of a covariance between the fitness of a genotype of and the number of alleles (divided by two) of each type it contains. You just need to think about this to see why it is true. In a later entry I will show this more explicitly during a derivation of the Robertson-Price idenity.Inuitively we can see that the allele frequencies are going to change according to their covariance with fitness, but that the alleles are contained within genotypes and it is the fitness of the genotypes that really matters. Burger then shows how in the biallelic case, we get the classic representation</p>
 <p><span class="math display">\[\dot p = \frac{p(1-p)}{2} \frac{d\bar m}{dp}\]</span></p>
 <p>We then run into a pitfall of thinking about things in terms of adaptive landscapes. With single locus, its nice to think about evolution as a hill climbing process, but this is in general not true when there are multiple loci. Also, Fisher believed that the potential function (<span class="math inline">\(\bar m\)</span>) would be impacted by the environment and could not be truly useful in this way. Basically, the idea of reasoning about high dimensional adaptive landscapes is probably not worth your time, because as Steve Frank told me “trust me, you don’t understand them.”</p>
